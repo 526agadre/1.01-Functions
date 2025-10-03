@@ -12,8 +12,12 @@ function render (html) {
 */
 function greet () {
   // TODO: Write your code here
+  const name = prompt('What is your actual real life name?')
+  if (name) {
+    render("<h3> Do you not have a name? You left this blank. </h3>")
+    return
 }
-
+render (`<p>Hello. ${name} Nice to meet you!</p>`)
 /* 
   Function 2 — averageNumbers()
   ------------------------------
@@ -35,6 +39,12 @@ function averageNumbers () {
 */
 function timeOfDay () {
   // TODO: Write your code here
+  const time = new Date().getHours()
+  let msg = ''
+  if (h < 12 ) msg = 'Good morning!'
+  else if (time < 18) msg = 'Good afternoon!'
+  else msg = 'Good evening!'
+render (`<p>${msg}</p>`)
 }
 
 /* 
@@ -47,7 +57,20 @@ function timeOfDay () {
 */
 function randomBetween () {
   // TODO: Write your code here
+  const min = parseInt(prompt('Enter a minimum number:'))
+    const max = parseInt(prompt('Enter a maximum number:'))
 }
+    if(isNaN(min) || isNaN(max)) {
+      render(`Please use actual numbers!`)
+    }
+    if(min >= max) {
+      render(`Please make sure the minimum number is less than the max!`)
+      return
+    }
+    const rndNum = Math.floor() * (max - min + 1)
+    render (rndNum
+
+    )
 
 /* 
   Function 5 — clearOutput()
