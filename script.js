@@ -1,5 +1,5 @@
 // Helper function: writes any HTML into the #out div
-function render (html) {
+function render(html) {
   document.getElementById('out').innerHTML = html
 }
 
@@ -10,14 +10,17 @@ function render (html) {
   - If they type something, display "Hello, NAME!"
   - If they cancel or leave blank, show a friendly message
 */
-function greet () {
-  // TODO: Write your code here
-  const name = prompt('What is your actual real life name?')
-  if (name) {
-    render("<h3> Do you not have a name? You left this blank. </h3>")
-    return
+function greet() {
+  const name = prompt("What is your name?");
+  if (!name) {
+    render("<h1>Do you not have a name? You left it blank!</h1>");
+    return;
+  }
+  else {
+    render(`<p>Hello, ${name}!</p>`);
+  }
 }
-render (`<p>Hello. ${name} Nice to meet you!</p>`)
+
 /* 
   Function 2 — averageNumbers()
   ------------------------------
@@ -26,7 +29,7 @@ render (`<p>Hello. ${name} Nice to meet you!</p>`)
   - Calculate the average
   - Display the average AND the list of numbers
 */
-function averageNumbers () {
+function averageNumbers() {
   // TODO: Write your code here
 }
 
@@ -37,14 +40,17 @@ function averageNumbers () {
   - Decide whether it's morning, afternoon, or evening
   - Display a message like "Good morning!" 
 */
-function timeOfDay () {
-  // TODO: Write your code here
-  const time = new Date().getHours()
-  let msg = ''
-  if (h < 12 ) msg = 'Good morning!'
-  else if (time < 18) msg = 'Good afternoon!'
-  else msg = 'Good evening!'
-render (`<p>${msg}</p>`)
+function timeOfDay() {
+  const currentHour = new Date().getHours();
+  let message = "";
+  if (currentHour < 12) {
+    message = "Good morning!";
+  } else if (currentHour < 18) {
+    message = "Good afternoon!";
+  } else {
+    message = "Good evening!";
+  }
+  render(`<p>${message}</p>`);
 }
 
 /* 
@@ -55,22 +61,23 @@ render (`<p>${msg}</p>`)
   - Display the result
   - Handle invalid input (like blanks or min >= max)
 */
-function randomBetween () {
-  // TODO: Write your code here
-  const min = parseInt(prompt('Enter a minimum number:'))
-    const max = parseInt(prompt('Enter a maximum number:'))
-}
-    if(isNaN(min) || isNaN(max)) {
-      render(`Please use actual numbers!`)
-    }
-    if(min >= max) {
-      render(`Please make sure the minimum number is less than the max!`)
-      return
-    }
-    const rndNum = Math.floor() * (max - min + 1)
-    render (rndNum
+function randomBetween() {
+  const minInput = prompt("Enter the minimum number:");
+  const maxInput = prompt("Enter the maximum number:");
+  const min = parseInt(minInput);
+  const max = parseInt(maxInput);
+  if (isNaN(min) || isNaN(max)) {
+    render("<p>Invalid input. Please try again.</p>");
+    return;
+  }
+  if (min >= max) {
+    render("<p>Please make sure the minimum is less than the maximum.</p>");
+    return;
+  }
 
-    )
+  const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+  render(`<p>Random number between ${min} and ${max}: ${randomNum}</p>`);
+}
 
 /* 
   Function 5 — clearOutput()
@@ -78,8 +85,8 @@ function randomBetween () {
   - Clear whatever is inside #out
   - Replace it with a placeholder message like "Output cleared."
 */
-function clearOutput () {
-  // TODO: Write your code here
+function clearOutput() {
+  render("<p>Output cleared.</p>");
 }
 
 // ---- Event listeners for the demo buttons ----
@@ -103,3 +110,39 @@ document.getElementById('btnClear').addEventListener('click', clearOutput)
   Write each function below, and don’t forget to connect each one 
   to a new button in index.html using addEventListener.
 */
+
+function changeTitle() {
+  document.title = "New Page Title!";
+  render("<p>Page title changed!</p>");
+}
+document.getElementById('btnChangeTitle').addEventListener('click', changeTitle);
+
+let colorIndex = 0;
+const colors = ['red', 'green', 'blue', 'orange', 'purple'];
+function cycleTextColor() {
+  const outDiv = document.getElementById('out');
+  outDiv.style.color = colors[colorIndex];
+  colorIndex = (colorIndex + 1) % colors.length;
+  render(`<p>Text color changed to ${outDiv.style.color}!</p>`);
+}
+document.getElementById('btnCycleColor').addEventListener('click', cycleTextColor);
+
+function randomBackgroundColor() {
+  const outDiv = document.getElementById('out');
+  const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+  outDiv.style.backgroundColor = randomColor;
+  render(`<p>Background color changed to ${randomColor}!</p>`);
+}
+document.getElementById('btnRandomBgColor').addEventListener('click', randomBackgroundColor);
+
+function doubleNumber() {
+  const numInput = prompt("Enter a number to double:");
+  const num = parseFloat(numInput);
+  if (isNaN(num)) {
+    render("<p>Invalid input. Please enter a valid number.</p>");
+    return;
+  }
+  const doubled = num * 2;
+  render(`<p>${num} doubled is ${doubled}.</p>`);
+}
+document.getElementById('btnDouble').addEventListener('click', doubleNumber);
